@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #0b0a09;
+}
+
+body {
+    color: #e8e1d5;
+    overflow-x: hidden;
+}
+
+::selection {
+    background: #d97706;
+    color: #0b0a09;
+}
+
+.char {
+    display: inline-block;
+    transform-origin: center bottom;
+    backface-visibility: hidden;
+}

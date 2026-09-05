@@ -1,42 +1,103 @@
 import Image from "next/image";
 import TextAnim from "./TextAnim";
 
-const Hero = () => {
+const Hero = ({ prefix }: { prefix: string }) => {
     return (
         <section
-            className="relative bg-black h-screen w-full flex flex-col justify-between 
-            text-[6vw] text-white leading-[1.2] py-[2vh] px-[5vw]"
+            className="
+                relative min-h-screen w-full overflow-hidden
+                flex flex-col justify-between
+                bg-[#0b0a09] text-[#e8e1d5]
+                leading-[1.05]
+                py-[2vh] px-[5vw]
+            "
         >
-            <div>
+            {/* atmospheric glow */}
+            <div className="pointer-events-none absolute inset-0">
+                <div
+                    className="
+                        absolute left-1/2 top-1/2
+                        -translate-x-1/2 -translate-y-1/2
+                        w-[45vw] h-[45vw]
+                        rounded-full
+                        bg-orange-700/10
+                        blur-[120px]
+                    "
+                />
+
+                <div
+                    className="
+                        absolute inset-0 opacity-[0.08]
+                        bg-[radial-gradient(circle_at_center,#d97706_1px,transparent_1px)]
+                        bg-size-[18px_18px]
+                    "
+                />
+            </div>
+
+            {/* TOP */}
+            <div className="relative z-10">
                 <TextAnim>
-                    <h2>We are</h2>
+                    <h2>WE FORGE</h2>
                 </TextAnim>
 
                 <TextAnim>
-                    <h2>Building the Future</h2>
+                    <h2>DIGITAL</h2>
                 </TextAnim>
 
                 <TextAnim>
-                    <h2>Of the Web</h2>
+                    <h2>LEGENDS</h2>
                 </TextAnim>
             </div>
 
-            <div className="h-[25vw] w-[20vw] mx-auto bg-black relative">
-                <Image src="/images/item.png" alt="about" fill className="object-cover w-full h-full" />
+            {/* DRAGON RELIC */}
+            <div
+                className="
+                    relative z-10
+                    h-[38vw] w-[28vw]
+                    max-h-130 max-w-95
+                    mx-auto
+                "
+            >
+                {/* aura */}
+                <div
+                    className="
+                        absolute inset-[15%]
+                        rounded-full
+                        bg-orange-600/10
+                        blur-[80px]
+                    "
+                />
+
+                <Image
+                    src={prefix + "/images/item.png"}
+                    alt="Ancient dragon relic"
+                    fill
+                    priority
+                    className="
+                        object-contain
+                        drop-shadow-[0_30px_40px_rgba(0,0,0,0.8)]
+                    "
+                />
             </div>
 
-            <div className="text-right">
+            {/* BOTTOM */}
+            <div className="relative z-10 text-right">
                 <TextAnim>
-                    <h2>That</h2>
+                    <h2>CARVED</h2>
                 </TextAnim>
 
                 <TextAnim>
-                    <h2>Changes the Way</h2>
+                    <h2>FROM STONE</h2>
                 </TextAnim>
 
                 <TextAnim>
-                    <h2>You think</h2>
+                    <h2>AND FIRE</h2>
                 </TextAnim>
+            </div>
+
+            {/* small coordinates */}
+            <div className="absolute bottom-[2vh] left-[5vw] text-[10px] tracking-[0.3em] text-stone-500">
+                DRAGON / RELIC / 001
             </div>
         </section>
     );

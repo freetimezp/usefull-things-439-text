@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrambleTextPlugin } from "gsap/all";
@@ -8,16 +8,21 @@ import { useLenis } from "lenis/react";
 
 gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin);
 
-const TEXTS: string[] = [
-    "Building the clarity through throughful user experience",
-    "Crafting digital stories that resonate with users",
-    "Designing interfaces that inspire and engage",
-    "Creating seamless journeys through innovation",
+const TEXTS = [
+    "THE DRAGON AWAKENS",
+    "THE STONE REMEMBERS",
+    "THE FORGE BURNS",
+    "THE BEAST ASCENDS",
 ];
 
-const IMAGES: string[] = ["/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg", "/images/img4.jpg"];
+const IMAGES = [
+    "/images/img1.png",
+    "/images/img2.png",
+    "/images/img3.png",
+    "/images/img4.png",
+];
 
-const scrambleChars = "£ ∅ √ ¥ ฿ △ ◩ c r e a t i v e Â Ç Ď D ʤ ʥ ʩ Ĥ d e s i g n ◸ ◹ ◬ ◺ ↉";
+const scrambleChars = "ᚦ ᚱ ᚲ ᛉ ᛟ ᛏ ᚠ ᚢ ᚨ ᚷ ᚺ ᛃ ᛇ ᛒ ᛖ ᛗ ᛞ ◇ ◆ △ ◬ ◈";
 
 interface ParallaxImageProps {
     src: string;
@@ -26,9 +31,17 @@ interface ParallaxImageProps {
     prevText: () => void;
 }
 
-const ParallaxImage: React.FC<ParallaxImageProps> = ({ src, index, nextText, prevText }) => {
+const isProd = process.env.NODE_ENV === "production";
+const prefix = isProd ? "usefull-things-439-text" : "";
+
+const ParallaxImage: React.FC<ParallaxImageProps> = ({
+    src,
+    index,
+    nextText,
+    prevText,
+}) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const [offset, setOffset] = useState<number>(0);
+    const [offset, setOffset] = useState(0);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -37,7 +50,9 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({ src, index, nextText, pre
             ScrollTrigger.create({
                 trigger: containerRef.current,
                 start: "top 50%",
+
                 onEnter: index === 0 ? undefined : nextText,
+
                 onLeaveBack: prevText,
             });
         });
@@ -49,61 +64,139 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({ src, index, nextText, pre
         if (!containerRef.current) return;
 
         const rect = containerRef.current.getBoundingClientRect();
-        const scrollY = rect.top / window.innerHeight;
-        setOffset(-scrollY * 190);
+
+        const progress = rect.top / window.innerHeight;
+
+        setOffset(-progress * 190);
     });
 
     return (
-        <div ref={containerRef} className="w-full h-screen overflow-clip">
+        <div
+            ref={containerRef}
+            className="
+                relative
+                h-screen
+                w-full
+                overflow-hidden
+                bg-[#11100e]
+            "
+        >
             <img
-                src={src}
+                src={prefix + src}
                 alt=""
-                className="size-full object-cover scale-150"
-                style={{ transform: `translateY(${offset}px)` }}
+                className="
+                    absolute
+                    inset-0
+                    size-full
+                    object-cover
+                    scale-[1.1]
+                    brightness-[0.65]
+                    contrast-[1.15]
+                    saturate-[0.65]
+                "
+                style={{
+                    transform: `translateY(${offset}px) scale(1.1)`,
+                }}
             />
+
+            {/* dark vignette */}
+            <div
+                className="
+                    pointer-events-none
+                    absolute inset-0
+                    bg-[radial-gradient(circle,transparent_20%,rgba(0,0,0,.8)_100%)]
+                "
+            />
+
+            {/* ember atmosphere */}
+            <div
+                className="
+                    pointer-events-none
+                    absolute inset-0
+                    bg-[radial-gradient(circle_at_70%_60%,rgba(180,60,10,.15),transparent_30%)]
+                "
+            />
+
+            {/* chapter number */}
+            <div className="absolute bottom-[5vh] left-[4vw] text-[10px] tracking-[0.35em] text-stone-400">
+                0{index + 1} / DRAGON CHRONICLES
+            </div>
         </div>
     );
 };
 
 const ScrambleScroll: React.FC = () => {
     const textRef = useRef<HTMLParagraphElement | null>(null);
-    const currentIndex = useRef<number>(0);
+    const currentIndex = useRef(0);
 
     const scramble = (newIndex: number) => {
         if (!textRef.current) return;
 
         currentIndex.current = newIndex;
 
+        gsap.killTweensOf(textRef.current);
+
         gsap.to(textRef.current, {
-            duration: 0.5,
+            duration: 1.8,
+
             scrambleText: {
                 text: TEXTS[newIndex],
                 chars: scrambleChars,
-                revealDelay: 0.1,
-                speed: 0.1,
+                revealDelay: 0.65,
+                speed: 0.35,
             },
+
+            ease: "power2.out",
         });
     };
 
-    const nextText = () => scramble((currentIndex.current + 1) % TEXTS.length);
+    const nextText = () => {
+        scramble((currentIndex.current + 1) % TEXTS.length);
+    };
 
-    const prevText = () => scramble((currentIndex.current - 1 + TEXTS.length) % TEXTS.length);
+    const prevText = () => {
+        scramble((currentIndex.current - 1 + TEXTS.length) % TEXTS.length);
+    };
 
     return (
-        <section className="w-full relative">
-            <div className="h-screen w-full bg-red-300" />
+        <section className="relative w-full bg-[#0b0a09]">
+            {/* INTRO GAP */}
+            <div className="h-40 w-full bg-[#0b0a09]" />
 
-            <div className="w-full relative">
-                <div className="absolute size-full inset-0 z-10">
-                    <div className="h-screen w-full sticky inset-0 flex items-center px-[4vw]">
-                        <p ref={textRef} className="text-white text-[3vw] tracking-tight">
-                            {TEXTS[0]}
-                        </p>
+            <div className="relative w-full">
+                {/* STICKY TITLE */}
+                <div className="pointer-events-none absolute inset-0 z-20">
+                    <div className="sticky top-0 flex h-screen items-center px-[4vw]">
+                        <div>
+                            <div className="mb-5 text-[10px] tracking-[0.4em] text-orange-700">
+                                CHRONICLE
+                            </div>
+
+                            <p
+                                ref={textRef}
+                                className="
+                                    max-w-[80vw]
+                                    text-[6vw]
+                                    leading-[0.9]
+                                    tracking-[-0.04em]
+                                    text-[#e8e1d5]
+                                "
+                            >
+                                {TEXTS[0]}
+                            </p>
+                        </div>
                     </div>
                 </div>
 
+                {/* IMAGES */}
                 {IMAGES.map((src, index) => (
-                    <ParallaxImage key={index} src={src} index={index} nextText={nextText} prevText={prevText} />
+                    <ParallaxImage
+                        key={src}
+                        src={prefix + src}
+                        index={index}
+                        nextText={nextText}
+                        prevText={prevText}
+                    />
                 ))}
             </div>
         </section>

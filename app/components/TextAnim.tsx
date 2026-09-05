@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
@@ -11,7 +12,8 @@ type Props = {
     useScrollTrigger?: boolean;
 };
 
-const ELECTRIC = "#2b6bbb";
+const EMBER = "#d97706";
+const METAL = "#e8e1d5";
 
 const TextAnim = ({ children, useScrollTrigger = false }: Props) => {
     const textRef = useRef<HTMLSpanElement | null>(null);
@@ -28,46 +30,52 @@ const TextAnim = ({ children, useScrollTrigger = false }: Props) => {
             const play = () => {
                 split.chars.forEach((char, i) => {
                     const tl = gsap.timeline({
-                        delay: i * 0.04 + gsap.utils.random(0, 0.15),
+                        delay: i * 0.025 + gsap.utils.random(0, 0.12),
                     });
 
                     tl.fromTo(
                         char,
                         {
                             opacity: 0,
-                            y: 0,
-                            color: "#ffffff",
+                            y: 18,
+                            rotateX: -70,
+                            color: "#3d3934",
+                            filter: "blur(6px)",
                         },
                         {
-                            opacity: gsap.utils.random(0.6, 1),
-                            color: ELECTRIC,
-                            duration: gsap.utils.random(0.05, 0.12),
-                            ease: "none",
-                        }
-                    )
-                        .to(char, {
-                            opacity: gsap.utils.random(0.2, 0.6),
-                            y: gsap.utils.random(-2, 2),
-                            duration: gsap.utils.random(0.04, 0.08),
-                            ease: "none",
-                        })
-                        .to(char, {
                             opacity: 1,
                             y: 0,
-                            color: "#ffffff",
-                            duration: gsap.utils.random(0.08, 0.18),
+                            rotateX: 0,
+                            color: EMBER,
+                            filter: "blur(0px)",
+                            duration: gsap.utils.random(0.16, 0.32),
                             ease: "power2.out",
+                        },
+                    )
+
+                        // forged-metal flash
+                        .to(char, {
+                            color: "#f3c27a",
+                            duration: 0.12,
+                            ease: "none",
+                        })
+
+                        .to(char, {
+                            color: METAL,
+                            duration: gsap.utils.random(0.24, 0.44),
+                            ease: "power3.out",
                         });
 
-                    // Random extra flicker pulses
-                    const pulses = gsap.utils.random(1, 3, 1);
-                    for (let p = 0; p < pulses; p++) {
+                    // occasional ember flicker
+                    if (Math.random() > 0.55) {
                         tl.to(char, {
-                            opacity: gsap.utils.random(0.3, 1),
-                            color: gsap.utils.random(0, 1) > 0.6 ? ELECTRIC : "#ffffff",
-                            duration: gsap.utils.random(0.04, 0.09),
-                            delay: gsap.utils.random(0.02, 0.06),
-                            ease: "none",
+                            color: EMBER,
+                            opacity: gsap.utils.random(0.55, 0.9),
+                            duration: 0.1,
+                        }).to(char, {
+                            color: METAL,
+                            opacity: 1,
+                            duration: 0.16,
                         });
                     }
                 });
@@ -93,6 +101,7 @@ const TextAnim = ({ children, useScrollTrigger = false }: Props) => {
             ref={textRef}
             style={{
                 display: "inline-block",
+                perspective: "600px",
                 willChange: "opacity, transform, color",
             }}
         >
