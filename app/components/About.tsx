@@ -53,14 +53,14 @@ const About = () => {
                     z-10
                     mx-auto
                     w-full
-                    max-w-[1600px]
+                    max-w-400
                 "
             >
                 {/* =========================================
                     INTRO
                 ========================================= */}
 
-                <div className="mx-auto max-w-[1100px]">
+                <div className="mx-auto max-w-275">
                     <TextAnim useScrollTrigger>
                         <h2
                             className="
@@ -127,7 +127,7 @@ const About = () => {
                             lg:h-[42vw]
                             lg:w-full
 
-                            xl:h-[560px]
+                            xl:h-140
                         "
                     >
                         <Image
@@ -200,11 +200,11 @@ const About = () => {
                                     md:max-w-[60vw]
                                     md:text-[2.2vw]
 
-                                    lg:max-w-[360px]
+                                    lg:max-w-90
                                     lg:text-[1.15vw]
                                     lg:leading-[1.6]
 
-                                    xl:max-w-[390px]
+                                    xl:max-w-97.5
                                     xl:text-[17px]
                                 "
                             >
@@ -256,7 +256,7 @@ const About = () => {
                             lg:h-[42vw]
                             lg:w-full
 
-                            xl:h-[560px]
+                            xl:h-140
                         "
                     >
                         <Image

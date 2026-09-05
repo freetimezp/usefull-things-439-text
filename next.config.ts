@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const repo = "usefull-things-437-text";
+const repo = "usefull-things-439-text";
 
 const nextConfig: NextConfig = {
     /* config options here */
