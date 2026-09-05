@@ -32,7 +32,7 @@ interface ParallaxImageProps {
 }
 
 const isProd = process.env.NODE_ENV === "production";
-const prefix = isProd ? "usefull-things-439-text" : "";
+const prefix = isProd ? "/usefull-things-439-text" : "";
 
 const ParallaxImage: React.FC<ParallaxImageProps> = ({
     src,
@@ -87,7 +87,7 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
                 src={prefix + src}
                 alt=""
                 className="
-                     absolute inset-0
+                    absolute inset-0
                     size-full
                     object-cover
                     scale-[1.2]

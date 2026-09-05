@@ -2,7 +2,7 @@ import Image from "next/image";
 import TextAnim from "./TextAnim";
 
 const isProd = process.env.NODE_ENV === "production";
-const prefix = isProd ? "usefull-things-439-text" : "";
+const prefix = isProd ? "/usefull-things-439-text" : "";
 
 const About = () => {
     return (
