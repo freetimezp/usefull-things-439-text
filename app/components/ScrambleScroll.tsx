@@ -212,7 +212,7 @@ const ScrambleScroll: React.FC = () => {
                 {IMAGES.map((src, index) => (
                     <ParallaxImage
                         key={src}
-                        src={prefix + src}
+                        src={src}
                         index={index}
                         nextText={nextText}
                         prevText={prevText}
