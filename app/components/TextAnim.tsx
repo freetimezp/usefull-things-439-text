@@ -103,6 +103,7 @@ const TextAnim = ({ children, useScrollTrigger = false }: Props) => {
                 display: "inline-block",
                 perspective: "600px",
                 willChange: "opacity, transform, color",
+                marginRight: "10px",
             }}
         >
             {children}

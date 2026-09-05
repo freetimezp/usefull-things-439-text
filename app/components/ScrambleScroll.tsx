@@ -67,7 +67,9 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
 
         const progress = rect.top / window.innerHeight;
 
-        setOffset(-progress * 190);
+        const multiplier = window.innerWidth < 768 ? 90 : 190;
+
+        setOffset(-progress * multiplier);
     });
 
     return (
@@ -85,14 +87,15 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
                 src={prefix + src}
                 alt=""
                 className="
-                    absolute
-                    inset-0
+                     absolute inset-0
                     size-full
                     object-cover
-                    scale-[1.1]
+                    scale-[1.2]
                     brightness-[0.65]
-                    contrast-[1.15]
+                    contrast-[1.1]
                     saturate-[0.65]
+                    md:scale-[1.45]
+                    md:contrast-[1.15]
                 "
                 style={{
                     transform: `translateY(${offset}px) scale(1.1)`,
@@ -166,20 +169,37 @@ const ScrambleScroll: React.FC = () => {
             <div className="relative w-full">
                 {/* STICKY TITLE */}
                 <div className="pointer-events-none absolute inset-0 z-20">
-                    <div className="sticky top-0 flex h-screen items-center px-[4vw]">
+                    <div
+                        className="
+                            sticky top-0
+                            flex h-screen items-center
+                            px-[5vw]
+                            md:px-[4vw]
+                        "
+                    >
                         <div>
-                            <div className="mb-5 text-[10px] tracking-[0.4em] text-orange-700">
+                            <div
+                                className="
+                                    mb-4
+                                    text-[8px]
+                                    tracking-[0.4em]
+                                    text-orange-700
+                                    md:text-[10px]
+                                "
+                            >
                                 CHRONICLE
                             </div>
 
                             <p
                                 ref={textRef}
                                 className="
-                                    max-w-[80vw]
-                                    text-[6vw]
+                                    max-w-[90vw]
+                                    text-[11vw]
                                     leading-[0.9]
-                                    tracking-[-0.04em]
+                                    tracking-[-0.045em]
                                     text-[#e8e1d5]
+                                    md:max-w-[80vw]
+                                    md:text-[6vw]
                                 "
                             >
                                 {TEXTS[0]}

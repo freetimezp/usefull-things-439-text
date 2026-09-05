@@ -4,6 +4,7 @@ html,
 body {
     margin: 0;
     padding: 0;
+
     background: #0b0a09;
 }
 
@@ -21,4 +22,15 @@ body {
     display: inline-block;
     transform-origin: center bottom;
     backface-visibility: hidden;
+}
+
+/* mobile performance */
+@media (max-width: 767px) {
+    .char {
+        will-change: transform, opacity;
+    }
+
+    img {
+        -webkit-user-drag: none;
+    }
 }
